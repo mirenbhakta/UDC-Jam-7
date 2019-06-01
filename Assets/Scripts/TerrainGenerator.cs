@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Miren
 {
@@ -25,28 +26,35 @@ namespace Miren
 		[SerializeField]
 		private TerrainCollider terrainCollider;
 
-		public bool GenerateRandom;
+		[SerializeField]
+		private bool generateRandom;
+		
+		[SerializeField]
+		private NoiseSettings settings;
+		
+		[SerializeField]
+		private uint seed;
+		
+		[SerializeField]
+		private MapSize mapSize;
 
-		public NoiseSettings Settings;
-
-		public uint Seed;
-
-		public MapSize MapSize;
-
-		public void Awake()
+		[SerializeField]
+		private float mapHeight;
+		
+		public void Init()
 		{
-			if (GenerateRandom)
+			if (generateRandom)
 			{
-				Seed = (uint) Environment.TickCount;
+				seed = (uint) Environment.TickCount;
 			}
 
-			Settings.Init(Seed);
+			settings.Init(seed);
 
 			TerrainData terrainData = new TerrainData();
 
-			int size = sizes[(int) MapSize];
+			int size = sizes[(int) mapSize];
 			terrainData.heightmapResolution = size;
-			terrainData.size = new Vector3(size, 5, size);
+			terrainData.size = new Vector3(size, mapHeight, size);
 
 			Generate(terrainData, size);
 
@@ -63,7 +71,7 @@ namespace Miren
 			{
 				for (int y = 0; y < size; y++)
 				{
-					float height = Settings.Generate(new float2(y, x));
+					float height = settings.Generate(new float2(y, x));
 					heights[y, x] = height;
 				}
 			}
@@ -82,14 +90,14 @@ namespace Miren
 
 		public void Save(BinaryWriter writer)
 		{
-			writer.Write(Seed);
-			writer.Write((int) MapSize);
+			writer.Write(seed);
+			writer.Write((int) mapSize);
 		}
 
 		public void Load(BinaryReader reader)
 		{
-			Seed = reader.ReadUInt32();
-			MapSize = (MapSize) reader.ReadInt32();
+			seed = reader.ReadUInt32();
+			mapSize = (MapSize) reader.ReadInt32();
 		}
 	}
 }

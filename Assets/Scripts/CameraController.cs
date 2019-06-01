@@ -1,6 +1,5 @@
-﻿using System.Collections;
+﻿using System;
 using System.Collections.Generic;
-using Miren;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,6 +21,9 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private float zoomTime;
 
+    [SerializeField]
+    private float zoomSpeed;
+    
     private float zoomTarget, zoomVelocity;
 
     private float moveSpeed;
@@ -31,6 +33,8 @@ public class CameraController : MonoBehaviour
     private void Start()
     {
         TerrainData data = terrain.terrainData;
+        
+        transform.position = new Vector3(0, data.size.y / 2f, 0);
         Vector3 size = data.size * 0.5f;
         Vector3 offset = new Vector3();
         max = size - offset;
@@ -71,13 +75,11 @@ public class CameraController : MonoBehaviour
 
         pos += rotation * new Vector3(x, 0, y) * speed * Time.deltaTime;
 
-        pos.y = terrain.SampleHeight(pos);
-
         pos = Clamp(pos);
         transform.position = pos;
 
         // scroll
-        float scroll = Input.mouseScrollDelta.y;
+        float scroll = Input.mouseScrollDelta.y * zoomSpeed;
         zoomTarget = Mathf.Clamp(zoomTarget + scroll, minZoom, maxZoom);
 
         float zoomT = Mathf.InverseLerp(maxZoom, minZoom, zoomTarget);

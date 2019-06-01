@@ -166,12 +166,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTransform: {fileID: 963194228}
   terrain: {fileID: 1079177113}
-  minZoom: -24
-  maxZoom: -8
-  minZoomSpeed: 8
-  maxZoomSpeed: 16
-  zoomTime: 0.1
-  rotateSpeed: 16
+  minZoom: -48
+  maxZoom: -24
+  minZoomSpeed: 32
+  maxZoomSpeed: 48
+  zoomTime: 0.15
+  zoomSpeed: 4
 --- !u!1 &248247490
 GameObject:
   m_ObjectHideFlags: 0
@@ -291,7 +291,7 @@ Light:
   serializedVersion: 9
   m_Type: 1
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
-  m_Intensity: 1
+  m_Intensity: 0.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -449,6 +449,7 @@ GameObject:
   - component: {fileID: 1079177113}
   - component: {fileID: 1079177115}
   - component: {fileID: 1079177112}
+  - component: {fileID: 1079177116}
   m_Layer: 0
   m_Name: Terrain
   m_TagString: Untagged
@@ -471,14 +472,15 @@ MonoBehaviour:
   sizes: 000100000002000000040000
   terrain: {fileID: 1079177113}
   terrainCollider: {fileID: 1079177115}
-  GenerateRandom: 1
-  Settings:
-    Frequency: 0.02
-    Octaves: 6
+  generateRandom: 1
+  settings:
+    Frequency: 0.005
+    Octaves: 4
     Lacunarity: 2
-    Gain: 0.5
-  Seed: 25
-  MapSize: 2
+    Gain: 0.55
+  seed: 25
+  mapSize: 2
+  mapHeight: 10
 --- !u!218 &1079177113
 Terrain:
   m_ObjectHideFlags: 0
@@ -541,3 +543,16 @@ TerrainCollider:
   m_Enabled: 1
   m_TerrainData: {fileID: 0}
   m_EnableTreeColliders: 1
+--- !u!114 &1079177116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079177111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d778cfc76a514ecd8991daf1e2077a21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  generator: {fileID: 1079177112}
