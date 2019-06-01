@@ -451,7 +451,7 @@ GameObject:
   - component: {fileID: 1079177112}
   - component: {fileID: 1079177116}
   m_Layer: 0
-  m_Name: Terrain
+  m_Name: Game Map
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -556,3 +556,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   generator: {fileID: 1079177112}
+  items: {fileID: 11400000, guid: 65d383a02b89fe042a1836736b6d0caa, type: 2}

@@ -5,7 +5,7 @@ namespace Miren
     public enum ItemType
     {
         Resource,
-
+        Factory,
     }
 
     public unsafe struct ItemData

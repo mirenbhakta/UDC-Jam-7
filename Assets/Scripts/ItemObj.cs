@@ -49,9 +49,23 @@ namespace Miren
     {
         [MinValue(1)]
         public float HarvestDifficulty;
+
         public MapResource(string name, ushort id) : base(name, id)
         {
-            
+
+        }
+
+        public unsafe ResourceData ConvertData(ItemData item)
+        {
+            return *(ResourceData*) &item;
+        }
+    }
+
+    public class Factory : Item
+    {
+        public Factory(string name, ushort id) : base(name, id, ItemType.Factory)
+        {
+
         }
     }
 }
