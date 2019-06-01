@@ -47,6 +47,7 @@ namespace Miren
 
     public class MapResource : Resource
     {
+        [MinValue(1)]
         public float HarvestDifficulty;
         public MapResource(string name, ushort id) : base(name, id)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -12,6 +13,7 @@ namespace Miren
 		[Range(1, 16)]
 		public int Octaves;
 
+		[MinValue(1)]
 		public float Lacunarity;
 
 		[Range(0.00001f, 1)]
