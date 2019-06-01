@@ -18,6 +18,11 @@ namespace Miren
                 Item.Name = name;
             }
         }
+
+        private void Awake()
+        {
+            Item.OnAwake();
+        }
     }
 
     [Serializable]
@@ -33,6 +38,11 @@ namespace Miren
             Name = name;
             ID = id;
             Type = type;
+        }
+
+        internal virtual void OnAwake()
+        {
+
         }
     }
 
@@ -61,11 +71,92 @@ namespace Miren
         }
     }
 
+    public struct RecipeItem
+    {
+        public Item Item;
+        public uint Count;
+        public float Time;
+
+        public RecipeItem(Item item, uint count, float time)
+        {
+            Item = item;
+            Count = count;
+            Time = time;
+        }
+    }
+
     public class Factory : Item
     {
+        [SerializeField]
+        private FactoryRecipe factoryRecipe;
+
+        [NonSerialized]
+        public RecipeItem[] Ingredients, Products;
+
         public Factory(string name, ushort id) : base(name, id, ItemType.Factory)
         {
 
+        }
+
+        internal override void OnAwake()
+        {
+            Ingredients = factoryRecipe.IngredientReferences();
+            Products = factoryRecipe.ProductReferences();
+        }
+    }
+
+    public struct FactoryRecipe
+    {
+        public struct EditorRecipeItem
+        {
+            public ItemEditorReference Item;
+
+            [MinValue(1)]
+            public uint Count;
+
+            public float Time;
+        }
+
+        [SerializeField, LabelText("Consumed Items")]
+        private EditorRecipeItem[] editorItemIngredients;
+
+        [SerializeField, LabelText("Produced Items")]
+        private EditorRecipeItem[] editorItemProducts;
+
+        public RecipeItem[] IngredientReferences()
+        {
+            RecipeItem[] items = new RecipeItem[editorItemIngredients.Length];
+            for (int i = 0; i < items.Length; i++)
+            {
+                EditorRecipeItem e = editorItemIngredients[i];
+                items[i] = new RecipeItem(e.Item.DirectReference(), e.Count, e.Time);
+            }
+
+            return items;
+        }
+
+        public RecipeItem[] ProductReferences()
+        {
+            RecipeItem[] items = new RecipeItem[editorItemProducts.Length];
+            for (int i = 0; i < editorItemProducts.Length; i++)
+            {
+                EditorRecipeItem e = editorItemProducts[i];
+                items[i] = new RecipeItem(e.Item.DirectReference(), e.Count, e.Time);
+            }
+
+            return items;
+        }
+    }
+
+    [Serializable]
+    public struct ItemEditorReference
+    {
+        [SerializeField]
+        private ItemObj itemObj;
+
+        public Item DirectReference()
+        {
+            return itemObj.Item;
         }
     }
 }
