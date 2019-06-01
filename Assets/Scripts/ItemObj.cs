@@ -1,5 +1,4 @@
 using System;
-using System.Collections.ObjectModel;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using UnityEngine;
@@ -9,15 +8,15 @@ namespace Miren
     [CreateAssetMenu]
     public class ItemObj : SerializedScriptableObject
     {
-        [NonSerialized, OdinSerialize]
+        [NonSerialized, OdinSerialize, OnValueChanged(nameof(OnItemChange))]
         public Item Item;
-    }
-    
-    public class ItemCollection : KeyedCollection<ushort, Item>
-    {
-        protected override ushort GetKeyForItem(Item item)
+
+        private void OnItemChange()
         {
-            return item.ID;
+            if (Item != null)
+            {
+                Item.Name = name;
+            }
         }
     }
 
@@ -46,20 +45,12 @@ namespace Miren
         }
     }
 
-    public enum ItemType
+    public class MapResource : Resource
     {
-        Resource,
-        
-    }
-
-    public unsafe struct ItemData
-    {
-        public ushort ID;
-        public fixed byte Data[14];
-    }
-
-    public struct ResourceData
-    {
-        
+        public float HarvestDifficulty;
+        public MapResource(string name, ushort id) : base(name, id)
+        {
+            
+        }
     }
 }

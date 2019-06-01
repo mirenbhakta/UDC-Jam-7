@@ -20,8 +20,22 @@ MonoBehaviour:
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
-    SerializationNodes: []
-  item:
-    Name: 
-    ID: 0
-    Type: 0
+    SerializationNodes:
+    - Name: Item
+      Entry: 7
+      Data: 0|Miren.MapResource, Assembly-CSharp
+    - Name: Name
+      Entry: 1
+      Data: Iron Ore
+    - Name: ID
+      Entry: 3
+      Data: 0
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: HarvestDifficulty
+      Entry: 4
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 

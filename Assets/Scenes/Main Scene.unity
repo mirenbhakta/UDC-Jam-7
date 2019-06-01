@@ -478,7 +478,7 @@ MonoBehaviour:
     Octaves: 4
     Lacunarity: 2
     Gain: 0.55
-  seed: 25
+  seed: 60
   mapSize: 2
   mapHeight: 10
 --- !u!218 &1079177113
