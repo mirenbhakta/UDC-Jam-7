@@ -26,10 +26,31 @@ MonoBehaviour:
       Data: 0|Miren.ItemCollection, Assembly-CSharp
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 7
       Data: 1|Miren.MapResource, Assembly-CSharp
+    - Name: Name
+      Entry: 1
+      Data: Copper Ore
+    - Name: ID
+      Entry: 3
+      Data: 1
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: HarvestDifficulty
+      Entry: 4
+      Data: 1
+    - Name: editorYield
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 2|Miren.MapResource, Assembly-CSharp
     - Name: Name
       Entry: 1
       Data: Iron Ore
@@ -42,6 +63,84 @@ MonoBehaviour:
     - Name: HarvestDifficulty
       Entry: 4
       Data: 1
+    - Name: editorYield
+      Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 3|Miren.Factory, Assembly-CSharp
+    - Name: Name
+      Entry: 1
+      Data: Iron Ore Factory
+    - Name: ID
+      Entry: 3
+      Data: 10001
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: factoryRecipe
+      Entry: 7
+      Data: Miren.FactoryRecipe, Assembly-CSharp
+    - Name: editorItemIngredients
+      Entry: 7
+      Data: 4|Miren.FactoryRecipe+EditorRecipeItem[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Miren.FactoryRecipe+EditorRecipeItem, Assembly-CSharp
+    - Name: Item
+      Entry: 6
+      Data: 
+    - Name: Count
+      Entry: 3
+      Data: 1
+    - Name: Time
+      Entry: 4
+      Data: 0.06
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: editorItemProducts
+      Entry: 7
+      Data: 5|Miren.FactoryRecipe+EditorRecipeItem[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Miren.FactoryRecipe+EditorRecipeItem, Assembly-CSharp
+    - Name: Item
+      Entry: 6
+      Data: 
+    - Name: Count
+      Entry: 3
+      Data: 1
+    - Name: Time
+      Entry: 4
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 

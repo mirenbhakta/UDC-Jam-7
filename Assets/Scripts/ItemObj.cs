@@ -16,12 +16,21 @@ namespace Miren
             if (Item != null)
             {
                 Item.Name = name;
+                if (Item is MapResource mapResource)
+                {
+                    mapResource.OnValueChanged(this);
+                }
             }
         }
 
         private void Awake()
         {
             Item.OnAwake();
+        }
+
+        public Item DirectReference()
+        {
+            return Item;
         }
     }
 
@@ -32,6 +41,10 @@ namespace Miren
         public ushort ID;
 
         public ItemType Type;
+
+        public Item()
+        {
+        }
 
         public Item(string name, ushort id, ItemType type)
         {
@@ -49,6 +62,10 @@ namespace Miren
     [Serializable]
     public class Resource : Item
     {
+        public Resource()
+        {
+        }
+
         public Resource(string name, ushort id) : base(name, id, ItemType.Resource)
         {
 
@@ -60,14 +77,41 @@ namespace Miren
         [MinValue(1)]
         public float HarvestDifficulty;
 
+        [SerializeField]
+        [LabelText("Yield Resource")]
+        [ValidateInput(nameof(ValidateResource), "Item must be ItemType.Resource!")]
+        private ItemObj editorYield;
+
+        private static bool ValidateResource(ItemObj obj)
+        {
+            if (obj == null)
+            {
+                return true;
+            }
+
+            return obj.Item.Type == ItemType.Resource;
+        }
+
+        internal void OnValueChanged(ItemObj obj)
+        {
+            editorYield = obj;
+        }
+
+        [NonSerialized]
+        public Resource Yield;
+
+        public MapResource()
+        {
+        }
+
         public MapResource(string name, ushort id) : base(name, id)
         {
 
         }
 
-        public unsafe ResourceData ConvertData(ItemData item)
+        internal override void OnAwake()
         {
-            return *(ResourceData*) &item;
+            Yield = editorYield.DirectReference() as Resource;
         }
     }
 
@@ -109,7 +153,7 @@ namespace Miren
     {
         public struct EditorRecipeItem
         {
-            public ItemEditorReference Item;
+            public ItemObj Item;
 
             [MinValue(1)]
             public uint Count;
@@ -145,18 +189,6 @@ namespace Miren
             }
 
             return items;
-        }
-    }
-
-    [Serializable]
-    public struct ItemEditorReference
-    {
-        [SerializeField]
-        private ItemObj itemObj;
-
-        public Item DirectReference()
-        {
-            return itemObj.Item;
         }
     }
 }

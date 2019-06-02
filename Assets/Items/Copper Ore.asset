@@ -7,10 +7,10 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3703d284d694556a69167da4234f520, type: 3}
-  m_Name: Iron Ore
+  m_Name: Copper Ore
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
@@ -27,10 +27,10 @@ MonoBehaviour:
       Data: 0|Miren.MapResource, Assembly-CSharp
     - Name: Name
       Entry: 1
-      Data: Iron Ore
+      Data: Copper Ore
     - Name: ID
       Entry: 3
-      Data: 1
+      Data: 2
     - Name: Type
       Entry: 3
       Data: 0

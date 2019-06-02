@@ -15,8 +15,7 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000, guid: 24e317cce25e627498abc7b25e010159, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -30,7 +29,7 @@ MonoBehaviour:
       Data: Iron Ore Factory
     - Name: ID
       Entry: 3
-      Data: 5
+      Data: 10001
     - Name: Type
       Entry: 3
       Data: 0
@@ -47,13 +46,7 @@ MonoBehaviour:
       Entry: 7
       Data: Miren.FactoryRecipe+EditorRecipeItem, Assembly-CSharp
     - Name: Item
-      Entry: 7
-      Data: Miren.ItemEditorReference, Assembly-CSharp
-    - Name: itemObj
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 8
+      Entry: 6
       Data: 
     - Name: Count
       Entry: 3
@@ -80,13 +73,7 @@ MonoBehaviour:
       Entry: 7
       Data: Miren.FactoryRecipe+EditorRecipeItem, Assembly-CSharp
     - Name: Item
-      Entry: 7
-      Data: Miren.ItemEditorReference, Assembly-CSharp
-    - Name: itemObj
       Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
       Data: 
     - Name: Count
       Entry: 3

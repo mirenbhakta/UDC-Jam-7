@@ -73,7 +73,13 @@ public class CameraController : MonoBehaviour
 
         Quaternion rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
 
-        pos += rotation * new Vector3(x, 0, y).normalized * speed * Time.deltaTime;
+        Vector3 target = new Vector3(x, 0, y);
+        if (target.sqrMagnitude > 1)
+        {
+            target.Normalize();
+        }
+        
+        pos += rotation * target * speed * Time.deltaTime;
 
         pos = Clamp(pos);
         transform.position = pos;
