@@ -515,4 +515,5 @@ MonoBehaviour:
     Octaves: 0
     Lacunarity: 0
     Gain: 0
-  coalResources: []
+  coalResources:
+  - {fileID: 11400000, guid: b0b6631f08e2b444c9e32f7077baf378, type: 2}

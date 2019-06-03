@@ -7,7 +7,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3703d284d694556a69167da4234f520, type: 3}
   m_Name: Bituminous
@@ -15,12 +15,42 @@ MonoBehaviour:
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 2100000, guid: 491eda00a72735f45b6a0728db663e98, type: 2}
+    - {fileID: -7982704158380059054, guid: bc779e3fd72108a44a2583eb59af0892, type: 3}
+    - {fileID: 11400000, guid: e85cdaee01d1dc34aa75ee2c15f28467, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
     - Name: Item
+      Entry: 7
+      Data: 0|Miren.MapResource, Assembly-CSharp
+    - Name: Icon
       Entry: 6
+      Data: 
+    - Name: Name
+      Entry: 1
+      Data: Bituminous
+    - Name: ID
+      Entry: 3
+      Data: 5005
+    - Name: Type
+      Entry: 3
+      Data: 0
+    - Name: Material
+      Entry: 10
+      Data: 0
+    - Name: Mesh
+      Entry: 10
+      Data: 1
+    - Name: HarvestDifficulty
+      Entry: 4
+      Data: 1
+    - Name: editorYield
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
       Data: 
