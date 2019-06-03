@@ -19,6 +19,11 @@ namespace Miren
             transform.position = colliderPos;
             rendererObject.position = pos;
         }
+
+        public void SetRotation(Quaternion rotation)
+        {
+            rendererObject.localRotation = rotation;
+        }
     }
 
     public class MapResourceObject : ItemObjectBase<MapResource>
@@ -43,7 +48,7 @@ namespace Miren
 
         public uint Count;
 
-        public void Init(Vector3 position, MapResource resource)
+        public void Init(Vector3 position, Quaternion rotation, MapResource resource)
         {
             MeshFilter filter = rendererObject.GetComponent<MeshFilter>();
             filter.sharedMesh = resource.Mesh;
@@ -62,6 +67,7 @@ namespace Miren
                     break;
             }
 
+            SetRotation(rotation);
             SetPosition(position);
         }
     }

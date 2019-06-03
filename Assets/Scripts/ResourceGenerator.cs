@@ -30,8 +30,8 @@ namespace Miren
 
         public void GenerateResources(Random rand, Terrain terrain, int size, float mapHeight)
         {
-            int halfSize = size / 2;
             int featureSize = size / 16;
+            int halfSize = size / 2 - 16 / 2;
 
             for (int z = 0; z < featureSize; z++)
             {
@@ -67,7 +67,9 @@ namespace Miren
                     Vector3 pos = new Vector3(x * 16 - halfSize, 0, z * 16 - halfSize);
                     pos.y = terrain.SampleHeight(pos);
 
-                    instance.Init(pos, obj.Item as MapResource);
+                    Quaternion rotation = Quaternion.Euler(0, rand.NextFloat(-180, 180), 0);
+
+                    instance.Init(pos, rotation, obj.Item as MapResource);
                 }
             }
         }
