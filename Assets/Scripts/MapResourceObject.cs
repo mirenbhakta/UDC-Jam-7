@@ -50,6 +50,18 @@ namespace Miren
             MeshRenderer renderer = rendererObject.GetComponent<MeshRenderer>();
             renderer.sharedMaterial = resource.Material;
 
+            Vector3 size = resource.Mesh.bounds.size;
+            Collider2D coll = GetComponent<Collider2D>();
+            switch (coll)
+            {
+                case BoxCollider2D box:
+                    box.size = new Vector2(size.x, size.z);
+                    break;
+                case CircleCollider2D circle:
+                    circle.radius = Mathf.Max(size.x, size.z);
+                    break;
+            }
+
             SetPosition(position);
         }
     }
