@@ -16,16 +16,12 @@ namespace Miren
             if (Item != null)
             {
                 Item.Name = name;
-                if (Item is MapResource mapResource)
-                {
-                    mapResource.OnValueChanged(this);
-                }
             }
         }
 
         private void Awake()
         {
-            Item.OnAwake();
+            Item?.OnAwake();
         }
 
         public Item DirectReference()
@@ -37,6 +33,8 @@ namespace Miren
     [Serializable]
     public class Item
     {
+        public Sprite Icon;
+
         public string Name;
         public ushort ID;
 
@@ -64,6 +62,7 @@ namespace Miren
     {
         public Resource()
         {
+            Type = ItemType.Resource;
         }
 
         public Resource(string name, ushort id) : base(name, id, ItemType.Resource)
@@ -72,14 +71,20 @@ namespace Miren
         }
     }
 
-    public class MapResource : Resource
+    public abstract class RenderedItem : Item
+    {
+        public Material Material;
+        public Mesh Mesh;
+    }
+
+    public class MapResource : RenderedItem
     {
         [MinValue(1)]
         public float HarvestDifficulty;
 
         [SerializeField]
         [LabelText("Yield Resource")]
-        [ValidateInput(nameof(ValidateResource), "Item must be ItemType.Resource!")]
+        [ValidateInput(nameof(ValidateResource), "Item must be ItemType.Resource and must not be another MapResource!")]
         private ItemObj editorYield;
 
         private static bool ValidateResource(ItemObj obj)
@@ -89,12 +94,7 @@ namespace Miren
                 return true;
             }
 
-            return obj.Item.Type == ItemType.Resource;
-        }
-
-        internal void OnValueChanged(ItemObj obj)
-        {
-            editorYield = obj;
+            return obj.Item.Type == ItemType.Resource && !(obj.Item is MapResource);
         }
 
         [NonSerialized]
@@ -102,11 +102,7 @@ namespace Miren
 
         public MapResource()
         {
-        }
-
-        public MapResource(string name, ushort id) : base(name, id)
-        {
-
+            Type = ItemType.Resource;
         }
 
         internal override void OnAwake()
@@ -119,76 +115,32 @@ namespace Miren
     {
         public Item Item;
         public uint Count;
-        public float Time;
 
-        public RecipeItem(Item item, uint count, float time)
+        public RecipeItem(Item item, uint count)
         {
             Item = item;
             Count = count;
-            Time = time;
         }
     }
 
-    public class Factory : Item
+    public class Factory : RenderedItem
     {
+        public float SpeedMultiplier;
+
         [SerializeField]
-        private FactoryRecipe factoryRecipe;
+        private FactoryRecipe[] factoryRecipes;
 
-        [NonSerialized]
-        public RecipeItem[] Ingredients, Products;
-
-        public Factory(string name, ushort id) : base(name, id, ItemType.Factory)
+        public Factory()
         {
-
+            Type = ItemType.Factory;
         }
 
         internal override void OnAwake()
         {
-            Ingredients = factoryRecipe.IngredientReferences();
-            Products = factoryRecipe.ProductReferences();
-        }
-    }
-
-    public struct FactoryRecipe
-    {
-        public struct EditorRecipeItem
-        {
-            public ItemObj Item;
-
-            [MinValue(1)]
-            public uint Count;
-
-            public float Time;
-        }
-
-        [SerializeField, LabelText("Consumed Items")]
-        private EditorRecipeItem[] editorItemIngredients;
-
-        [SerializeField, LabelText("Produced Items")]
-        private EditorRecipeItem[] editorItemProducts;
-
-        public RecipeItem[] IngredientReferences()
-        {
-            RecipeItem[] items = new RecipeItem[editorItemIngredients.Length];
-            for (int i = 0; i < items.Length; i++)
+            for (int i = 0; i < factoryRecipes.Length; i++)
             {
-                EditorRecipeItem e = editorItemIngredients[i];
-                items[i] = new RecipeItem(e.Item.DirectReference(), e.Count, e.Time);
+                factoryRecipes[i].OnAwake();
             }
-
-            return items;
-        }
-
-        public RecipeItem[] ProductReferences()
-        {
-            RecipeItem[] items = new RecipeItem[editorItemProducts.Length];
-            for (int i = 0; i < editorItemProducts.Length; i++)
-            {
-                EditorRecipeItem e = editorItemProducts[i];
-                items[i] = new RecipeItem(e.Item.DirectReference(), e.Count, e.Time);
-            }
-
-            return items;
         }
     }
 }

@@ -7,38 +7,25 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3703d284d694556a69167da4234f520, type: 3}
-  m_Name: Iron Ore Factory
+  m_Script: {fileID: 11500000, guid: 6d18364f8b544daa97e5ed33428c9df0, type: 3}
+  m_Name: Copper Ore to Copper
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects: []
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 75bc07992dbef554a93d1e99b9be3785, type: 2}
+    - {fileID: 11400000, guid: 04653db09cfc63b4d96b51aeb78829cc, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: Item
-      Entry: 7
-      Data: 0|Miren.Factory, Assembly-CSharp
-    - Name: Name
-      Entry: 1
-      Data: Iron Ore Factory
-    - Name: ID
-      Entry: 3
-      Data: 10001
-    - Name: Type
-      Entry: 3
-      Data: 0
-    - Name: factoryRecipe
-      Entry: 7
-      Data: Miren.FactoryRecipe, Assembly-CSharp
     - Name: editorItemIngredients
       Entry: 7
-      Data: 1|Miren.FactoryRecipe+EditorRecipeItem[], Assembly-CSharp
+      Data: 0|Miren.FactoryRecipe+EditorRecipeItem[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1
@@ -46,14 +33,11 @@ MonoBehaviour:
       Entry: 7
       Data: Miren.FactoryRecipe+EditorRecipeItem, Assembly-CSharp
     - Name: Item
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 0
     - Name: Count
       Entry: 3
       Data: 1
-    - Name: Time
-      Entry: 4
-      Data: 0.06
     - Name: 
       Entry: 8
       Data: 
@@ -65,7 +49,7 @@ MonoBehaviour:
       Data: 
     - Name: editorItemProducts
       Entry: 7
-      Data: 2|Miren.FactoryRecipe+EditorRecipeItem[], Assembly-CSharp
+      Data: 1|Miren.FactoryRecipe+EditorRecipeItem[], Assembly-CSharp
     - Name: 
       Entry: 12
       Data: 1
@@ -73,14 +57,11 @@ MonoBehaviour:
       Entry: 7
       Data: Miren.FactoryRecipe+EditorRecipeItem, Assembly-CSharp
     - Name: Item
-      Entry: 6
-      Data: 
+      Entry: 10
+      Data: 1
     - Name: Count
       Entry: 3
       Data: 1
-    - Name: Time
-      Entry: 4
-      Data: 0
     - Name: 
       Entry: 8
       Data: 
@@ -90,9 +71,4 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
+  Time: 1

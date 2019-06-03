@@ -1,24 +1,34 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using UnityEngine;
 using Unity.Mathematics;
-
+using UnityEngine.Serialization;
 using Random = Unity.Mathematics.Random;
 
 namespace Miren
 {
-    [RequireComponent(typeof(TerrainGenerator))]
+    [RequireComponent(typeof(TerrainGenerator), typeof(ResourceGenerator))]
     public class GameMap : MonoBehaviour
     {
         [SerializeField]
-        internal TerrainGenerator generator;
+        internal TerrainGenerator terrainGenerator;
+
+        [SerializeField]
+        internal ResourceGenerator resourceGenerator;
 
         [SerializeField]
         internal ItemCollectionObj items;
 
         [SerializeField]
-        private int[] sizes;
+        private int[] mapSizes;
+
+        [SerializeField]
+        public MapResourceObject mapResourcePrefab;
+
+        [SerializeField]
+        private FactoryObject factoryPrefab;
 
         [SerializeField]
         private bool generateRandom;
@@ -42,16 +52,22 @@ namespace Miren
 
         public void GenerateMap()
         {
+            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
+
+            sw.Start();
             if (generateRandom)
             {
                 seed = (uint) Environment.TickCount;
             }
 
-            settings.Init(seed);
-            int size = sizes[(int) mapSize];
-            float[,] heightMap = generator.Init(size, settings, mapSize, mapHeight);
+            Random rand = new Random(seed);
 
-            
+            settings.Init(rand);
+            int size = mapSizes[(int) mapSize];
+            float[,] heightMap = terrainGenerator.Generate(size, settings, mapSize, mapHeight);
+
+            resourceGenerator.GenerateResources(rand, terrainGenerator.terrain, size, mapHeight);
+            sw.Stop();
         }
 
         public void Save(BinaryWriter writer)
@@ -69,11 +85,11 @@ namespace Miren
 #if UNITY_EDITOR
         private void OnValidate()
         {
-            if (sizes.Length == 3) return;
+            if (mapSizes.Length == 3) return;
 
             int[] n = new int[3];
-            Array.Copy(sizes, n, Mathf.Min(n.Length, sizes.Length));
-            sizes = n;
+            Array.Copy(mapSizes, n, Mathf.Min(n.Length, mapSizes.Length));
+            mapSizes = n;
         }
 #endif
     }

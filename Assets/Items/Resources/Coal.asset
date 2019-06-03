@@ -10,13 +10,12 @@ MonoBehaviour:
   m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3703d284d694556a69167da4234f520, type: 3}
-  m_Name: Copper Ore
+  m_Name: Coal
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 11400000}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -24,21 +23,18 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Item
       Entry: 7
-      Data: 0|Miren.MapResource, Assembly-CSharp
+      Data: 0|Miren.Resource, Assembly-CSharp
+    - Name: Icon
+      Entry: 6
+      Data: 
     - Name: Name
       Entry: 1
-      Data: Copper Ore
+      Data: Coal
     - Name: ID
       Entry: 3
-      Data: 2
+      Data: 1
     - Name: Type
       Entry: 3
-      Data: 0
-    - Name: HarvestDifficulty
-      Entry: 4
-      Data: 1
-    - Name: editorYield
-      Entry: 10
       Data: 0
     - Name: 
       Entry: 8

@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d18364f8b544daa97e5ed33428c9df0, type: 3}
+  m_Name: Iron Ore to Iron
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects:
+    - {fileID: 11400000, guid: 24e317cce25e627498abc7b25e010159, type: 2}
+    - {fileID: 11400000, guid: b99511e3f1c0d7a44a52b1ed7490498b, type: 2}
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: editorItemIngredients
+      Entry: 7
+      Data: 0|Miren.FactoryRecipe+EditorRecipeItem[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Miren.FactoryRecipe+EditorRecipeItem, Assembly-CSharp
+    - Name: Item
+      Entry: 10
+      Data: 0
+    - Name: Count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: editorItemProducts
+      Entry: 7
+      Data: 1|Miren.FactoryRecipe+EditorRecipeItem[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: Miren.FactoryRecipe+EditorRecipeItem, Assembly-CSharp
+    - Name: Item
+      Entry: 10
+      Data: 1
+    - Name: Count
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+  Time: 1

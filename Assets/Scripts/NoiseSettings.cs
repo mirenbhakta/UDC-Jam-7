@@ -3,6 +3,8 @@ using Sirenix.OdinInspector;
 using Unity.Mathematics;
 using UnityEngine;
 
+using Random = Unity.Mathematics.Random;
+
 namespace Miren
 {
 	[Serializable]
@@ -25,10 +27,15 @@ namespace Miren
 
 		public void Init(uint seed)
 		{
-			Unity.Mathematics.Random r = new Unity.Mathematics.Random(seed);
+			Random rand = new Random(seed);
+			Init(rand);
+		}
+
+		public void Init(Random rand)
+		{
 			for (int i = 0; i < Octaves * 2; i++)
 			{
-				offsets[i] = r.NextFloat();
+				offsets[i] = rand.NextFloat();
 
 			}
 

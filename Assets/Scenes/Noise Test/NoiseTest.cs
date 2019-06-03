@@ -1,5 +1,7 @@
-﻿#if UNITY_EDITOR
+﻿
 
+using Random = Unity.Mathematics.Random;
+#if UNITY_EDITOR
 using System;
 using Unity.Mathematics;
 using System.Collections;
