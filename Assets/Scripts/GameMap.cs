@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using Miren.UnityToolbag;
 using UnityEngine;
 using Unity.Mathematics;
 using UnityEngine.Serialization;
@@ -47,10 +48,13 @@ namespace Miren
 
         private MapResourceObject[] resourceInstances;
 
+        private string mapName;
+        
         internal event Action OnGenerate;
 
         private void Awake()
         {
+            Debug.Log(StandardPaths.saveDataDirectory);
             //GenerateMap();
         }
 
@@ -71,8 +75,6 @@ namespace Miren
 
         public void GenerateMap()
         {
-            System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
-
             if (resourceInstances != null)
             {
                 for (int i = 0; i < resourceInstances.Length; i++)
@@ -85,7 +87,6 @@ namespace Miren
                 }
             }
 
-            sw.Start();
             if (generateRandom || seed == 0)
             {
                 seed = (uint) Environment.TickCount;
@@ -100,7 +101,19 @@ namespace Miren
             resourceInstances = resourceGenerator.GenerateResources(rand, terrainGenerator.terrain, size);
 
             OnGenerate?.Invoke();
-            sw.Stop();
+        }
+
+        public void Save()
+        {
+            using (FileStream fs = new FileStream(Path.Combine(StandardPaths.saveDataDirectory, mapName),
+                FileMode.OpenOrCreate,
+                FileAccess.Write))
+            {
+                using (BinaryWriter writer = new BinaryWriter(fs))
+                {
+
+                }
+            }
         }
 
         public void Save(BinaryWriter writer)
