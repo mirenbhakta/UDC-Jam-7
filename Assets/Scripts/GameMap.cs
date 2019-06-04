@@ -45,6 +45,8 @@ namespace Miren
         [SerializeField]
         private float mapHeight;
 
+        private MapResourceObject[] resourceInstances;
+        
         private void Awake()
         {
             GenerateMap();
@@ -66,7 +68,7 @@ namespace Miren
             int size = mapSizes[(int) mapSize];
             float[,] heightMap = terrainGenerator.Generate(size, settings, mapSize, mapHeight);
 
-            resourceGenerator.GenerateResources(rand, terrainGenerator.terrain, size, mapHeight);
+            resourceInstances = resourceGenerator.GenerateResources(rand, terrainGenerator.terrain, size, mapHeight);
             sw.Stop();
         }
 
@@ -74,12 +76,24 @@ namespace Miren
         {
             writer.Write(seed);
             writer.Write((int) mapSize);
+
+            for (int i = 0; i < resourceInstances.Length; i++)
+            {
+
+            }
         }
 
         public void Load(BinaryReader reader)
         {
             seed = reader.ReadUInt32();
             mapSize = (MapSize) reader.ReadInt32();
+
+            int size = mapSizes[(int) mapSize];
+            int featureSize = size / 16;
+
+            resourceInstances = new MapResourceObject[featureSize * featureSize];
+
+            
         }
 
 #if UNITY_EDITOR

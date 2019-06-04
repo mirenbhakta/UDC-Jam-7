@@ -28,10 +28,12 @@ namespace Miren
         [SerializeField]
         private ItemObj[] coalResources;
 
-        public void GenerateResources(Random rand, Terrain terrain, int size, float mapHeight)
+        public MapResourceObject[] GenerateResources(Random rand, Terrain terrain, int size, float mapHeight)
         {
             int featureSize = size / 16;
             int halfSize = size / 2 - 16 / 2;
+
+            MapResourceObject[] mapResourceObjects = new MapResourceObject[featureSize * featureSize];
 
             for (int z = 0; z < featureSize; z++)
             {
@@ -63,15 +65,20 @@ namespace Miren
 
                     ItemObj obj = resources[rand.NextInt(0, resources.Length)];
 
-                    MapResourceObject instance = Instantiate(resourcePrefab, transform);
+                    MapResourceObject instance = mapResourceObjects[x + z * featureSize] =
+                        Instantiate(resourcePrefab, transform);
                     Vector3 pos = new Vector3(x * 16 - halfSize, 0, z * 16 - halfSize);
                     pos.y = terrain.SampleHeight(pos);
 
                     Quaternion rotation = Quaternion.Euler(0, rand.NextFloat(-180, 180), 0);
 
                     instance.Init(pos, rotation, obj.Item as MapResource);
+
+
                 }
             }
+
+            return mapResourceObjects;
         }
     }
 }

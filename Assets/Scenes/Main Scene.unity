@@ -470,7 +470,7 @@ MonoBehaviour:
     Lacunarity: 2
     Gain: 0.55
   seed: 60
-  mapSize: 0
+  mapSize: 2
   mapHeight: 10
 --- !u!114 &1079177117
 MonoBehaviour:
