@@ -1478,7 +1478,7 @@ MonoBehaviour:
   terrainGenerator: {fileID: 1079177112}
   resourceGenerator: {fileID: 1079177117}
   items: {fileID: 11400000, guid: 65d383a02b89fe042a1836736b6d0caa, type: 2}
-  mapSizes: 800000000004000000080000
+  mapSizes: 000200000004000000080000
   mapResourcePrefab: {fileID: 8469823263192612569, guid: 08a26a57383b41548a8bd51da140db9e,
     type: 3}
   factoryPrefab: {fileID: 7215815610490485483, guid: 47ecdfd243f4364478f1548cc2bf764c,
@@ -1486,7 +1486,7 @@ MonoBehaviour:
   generateRandom: 1
   seed: 0
   mapSize: 0
-  mapHeight: 10
+  mapHeight: 5
 --- !u!114 &1079177117
 MonoBehaviour:
   m_ObjectHideFlags: 0
