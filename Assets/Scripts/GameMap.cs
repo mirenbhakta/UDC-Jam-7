@@ -46,18 +46,47 @@ namespace Miren
         private float mapHeight;
 
         private MapResourceObject[] resourceInstances;
-        
+
+        internal event Action OnGenerate;
+
         private void Awake()
         {
-            GenerateMap();
+            //GenerateMap();
+        }
+
+        public void SetMapSize(int size)
+        {
+            mapSize = (MapSize) size;
+        }
+
+        public void SetGenerateRandom(bool gen)
+        {
+            generateRandom = gen;
+        }
+
+        public void SetSeed(string seed)
+        {
+            uint.TryParse(seed, out this.seed);
         }
 
         public void GenerateMap()
         {
             System.Diagnostics.Stopwatch sw = new System.Diagnostics.Stopwatch();
 
+            if (resourceInstances != null)
+            {
+                for (int i = 0; i < resourceInstances.Length; i++)
+                {
+                    MapResourceObject instance = resourceInstances[i];
+                    if (instance != null)
+                    {
+                        Destroy(instance.gameObject);
+                    }
+                }
+            }
+
             sw.Start();
-            if (generateRandom)
+            if (generateRandom || seed == 0)
             {
                 seed = (uint) Environment.TickCount;
             }
@@ -66,9 +95,11 @@ namespace Miren
 
             settings.Init(rand);
             int size = mapSizes[(int) mapSize];
-            float[,] heightMap = terrainGenerator.Generate(size, settings, mapSize, mapHeight);
+            terrainGenerator.Generate(size, settings, mapHeight);
 
-            resourceInstances = resourceGenerator.GenerateResources(rand, terrainGenerator.terrain, size, mapHeight);
+            resourceInstances = resourceGenerator.GenerateResources(rand, terrainGenerator.terrain, size);
+
+            OnGenerate?.Invoke();
             sw.Stop();
         }
 
@@ -79,7 +110,15 @@ namespace Miren
 
             for (int i = 0; i < resourceInstances.Length; i++)
             {
+                MapResourceObject instance = resourceInstances[i];
+                if (instance == null)
+                {
+                    writer.Write(-i);
+                    continue;
+                }
 
+                writer.Write(i);
+                instance.Save(writer);
             }
         }
 
@@ -93,7 +132,17 @@ namespace Miren
 
             resourceInstances = new MapResourceObject[featureSize * featureSize];
 
-            
+            for (int i = 0; i < resourceInstances.Length; i++)
+            {
+                int index = reader.ReadInt32();
+                if (index < 0)
+                {
+                    continue;
+                }
+
+                MapResourceObject obj = resourceGenerator.CreateInstance();
+                obj.Load(reader, items.Collection);
+            }
         }
 
 #if UNITY_EDITOR

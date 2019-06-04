@@ -19,8 +19,13 @@ namespace Miren
 		[SerializeField]
 		private TerrainCollider terrainCollider;
 
-		public float[,] Generate(int size, NoiseSettings settings, MapSize mapSize, float mapHeight)
+		public float[,] Generate(int size, NoiseSettings settings, float mapHeight)
 		{
+			if (terrain.terrainData != null)
+			{
+				Destroy(terrain.terrainData);
+			}
+
 			TerrainData terrainData = new TerrainData
 			{
 				heightmapResolution = size,

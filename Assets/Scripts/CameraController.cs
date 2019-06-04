@@ -3,96 +3,103 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class CameraController : MonoBehaviour
+namespace Miren
 {
-    [FormerlySerializedAs("cam")]
-    [SerializeField]
-    private Transform cameraTransform;
-
-    [SerializeField]
-    private Terrain terrain;
-
-    [SerializeField]
-    private float minZoom, maxZoom;
-
-    [SerializeField]
-    private float minZoomSpeed, maxZoomSpeed;
-    
-    [SerializeField]
-    private float zoomTime;
-
-    [SerializeField]
-    private float zoomSpeed;
-    
-    private float zoomTarget, zoomVelocity;
-
-    private float moveSpeed;
-
-    private Vector3 min, max;
-
-    private void Start()
+    public class CameraController : MonoBehaviour
     {
-        TerrainData data = terrain.terrainData;
-        
-        transform.position = new Vector3(0, data.size.y / 2f, 0);
-        Vector3 size = data.size * 0.5f;
-        Vector3 offset = new Vector3();
-        max = size - offset;
-        min = -max;
-        zoomTarget = Mathf.Lerp(minZoom, maxZoom, 0.5f);
-    }
+        [SerializeField]
+        private Transform cameraTransform;
 
-    private Vector3 Clamp(Vector3 pos)
-    {
-        pos.x = Mathf.Clamp(pos.x, min.x, max.x);
-        pos.z = Mathf.Clamp(pos.z, min.z, max.z);
-        return pos;
-    }
+        [SerializeField]
+        private GameMap map;
 
-    private void LateUpdate()
-    {
-        // rotation
-        if (Input.GetKey(KeyCode.Mouse1))
+        [SerializeField]
+        private float minZoom, maxZoom;
+
+        [SerializeField]
+        private float minZoomSpeed, maxZoomSpeed;
+
+        [SerializeField]
+        private float zoomTime;
+
+        [SerializeField]
+        private float zoomSpeed;
+
+        private float zoomTarget, zoomVelocity;
+
+        private float moveSpeed;
+
+        private Vector3 min, max;
+
+        private void Start()
         {
-            float hDelta = Input.GetAxis("Mouse X");
-
-            transform.Rotate(0, hDelta, 0, Space.World);
+            map.OnGenerate += Init;
         }
 
-        // position
-        float speed = moveSpeed;
-        if (Input.GetKey(KeyCode.LeftShift))
+        private void Init()
         {
-            speed *= 2;
+            TerrainData data = map.terrainGenerator.terrain.terrainData;
+
+            transform.position = new Vector3(0, data.size.y / 2f, 0);
+            Vector3 size = data.size * 0.5f;
+            Vector3 offset = new Vector3();
+            max = size - offset;
+            min = -max;
+            zoomTarget = Mathf.Lerp(minZoom, maxZoom, 0.5f);
         }
 
-        Vector3 pos = transform.position;
-
-        float x = Input.GetAxis("Horizontal");
-        float y = Input.GetAxis("Vertical");
-
-        Quaternion rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-
-        Vector3 target = new Vector3(x, 0, y);
-        if (target.sqrMagnitude > 1)
+        private Vector3 Clamp(Vector3 pos)
         {
-            target.Normalize();
+            pos.x = Mathf.Clamp(pos.x, min.x, max.x);
+            pos.z = Mathf.Clamp(pos.z, min.z, max.z);
+            return pos;
         }
-        
-        pos += rotation * target * speed * Time.deltaTime;
 
-        pos = Clamp(pos);
-        transform.position = pos;
+        private void LateUpdate()
+        {
+            // rotation
+            if (Input.GetKey(KeyCode.Mouse1))
+            {
+                float hDelta = Input.GetAxis("Mouse X");
 
-        // scroll
-        float scroll = Input.mouseScrollDelta.y * zoomSpeed;
-        zoomTarget = Mathf.Clamp(zoomTarget + scroll, minZoom, maxZoom);
+                transform.Rotate(0, hDelta, 0, Space.World);
+            }
 
-        float zoomT = Mathf.InverseLerp(maxZoom, minZoom, zoomTarget);
-        moveSpeed = Mathf.Lerp(minZoomSpeed, maxZoomSpeed, zoomT);
+            // position
+            float speed = moveSpeed;
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                speed *= 2;
+            }
 
-        Vector3 cameraPos = cameraTransform.localPosition;
-        cameraPos.z = Mathf.SmoothDamp(cameraPos.z, zoomTarget, ref zoomVelocity, zoomTime);
-        cameraTransform.localPosition = cameraPos;
+            Vector3 pos = transform.position;
+
+            float x = Input.GetAxis("Horizontal");
+            float y = Input.GetAxis("Vertical");
+
+            Quaternion rotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
+
+            Vector3 target = new Vector3(x, 0, y);
+            if (target.sqrMagnitude > 1)
+            {
+                target.Normalize();
+            }
+
+            pos += rotation * target * speed * Time.deltaTime;
+
+            pos = Clamp(pos);
+            transform.position = pos;
+
+            // scroll
+            float scroll = Input.mouseScrollDelta.y * zoomSpeed;
+            zoomTarget = Mathf.Clamp(zoomTarget + scroll, minZoom, maxZoom);
+
+            float zoomT = Mathf.InverseLerp(maxZoom, minZoom, zoomTarget);
+            moveSpeed = Mathf.Lerp(minZoomSpeed, maxZoomSpeed, zoomT);
+
+            Vector3 cameraPos = cameraTransform.localPosition;
+            cameraPos.z = Mathf.SmoothDamp(cameraPos.z, zoomTarget, ref zoomVelocity, zoomTime);
+            cameraTransform.localPosition = cameraPos;
+        }
     }
 }

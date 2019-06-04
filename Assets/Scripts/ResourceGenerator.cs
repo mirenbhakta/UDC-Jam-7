@@ -28,7 +28,7 @@ namespace Miren
         [SerializeField]
         private ItemObj[] coalResources;
 
-        public MapResourceObject[] GenerateResources(Random rand, Terrain terrain, int size, float mapHeight)
+        public MapResourceObject[] GenerateResources(Random rand, Terrain terrain, int size)
         {
             int featureSize = size / 16;
             int halfSize = size / 2 - 16 / 2;
@@ -79,6 +79,11 @@ namespace Miren
             }
 
             return mapResourceObjects;
+        }
+
+        public MapResourceObject CreateInstance()
+        {
+            return Instantiate(resourcePrefab, transform);
         }
     }
 }

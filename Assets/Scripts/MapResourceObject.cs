@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -69,6 +70,31 @@ namespace Miren
 
             SetRotation(rotation);
             SetPosition(position);
+        }
+
+        public void Save(BinaryWriter writer)
+        {
+            writer.Write(Item.ID);
+            Vector3 pos = rendererObject.position;
+            writer.Write(pos.x);
+            writer.Write(pos.y);
+            writer.Write(pos.z);
+            writer.Write(rendererObject.localEulerAngles.y);
+        }
+
+        public void Load(BinaryReader reader, ItemCollection items)
+        {
+            ushort id = reader.ReadUInt16();
+            MapResource item = items[id] as MapResource;
+
+            Vector3 pos;
+            pos.x = reader.ReadSingle();
+            pos.y = reader.ReadSingle();
+            pos.z = reader.ReadSingle();
+
+            Quaternion rot = Quaternion.Euler(0, reader.ReadSingle(), 0);
+
+            Init(pos, rot, item);
         }
     }
 }
