@@ -19,19 +19,19 @@ namespace Miren
 
         [SerializeField]
         private NoiseSettings settings;
-    
+
         private Texture2D tex;
 
         [SerializeField]
         private uint seed;
-        
+
         [SerializeField]
         private bool autoUpdate;
-        
+
         [SerializeField]
         private bool generate;
-        
-        
+
+
         void Start()
         {
             MeshFilter filter = GetComponent<MeshFilter>();
@@ -40,6 +40,7 @@ namespace Miren
             {
                 DestroyImmediate(renderer.material);
             }
+
             renderer.material = mat;
 
             renderer.material.mainTexture = tex = new Texture2D(128, 128);
@@ -61,10 +62,12 @@ namespace Miren
             {
                 for (int x = 0; x < 128; x++)
                 {
-                    float noise = settings.Generate(new float2(x, y));
-                    tex.SetPixel(x, y, Color.Lerp(Color.white, Color.black, noise));
+                    float noise = TerrainGenerator.Quintic(settings.GetRigidMulti(new float2(x, y)));
+
+                    tex.SetPixel(x, y, Color.Lerp(Color.black, Color.white, noise));
                 }
             }
+
             tex.Apply();
         }
     }

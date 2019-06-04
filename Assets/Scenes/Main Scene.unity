@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1383,6 +1383,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   terrain: {fileID: 1079177113}
   terrainCollider: {fileID: 1079177115}
+  grass: {fileID: 8574412962073106934, guid: ed21de5da4572e548b12067c7ad03702, type: 2}
+  sand: {fileID: 8574412962073106934, guid: 1c150b39e030fbe4a8807cbebf334e11, type: 2}
+  rock: {fileID: 8574412962073106934, guid: 1ca621d587c0ef54982f5cbfe99743e8, type: 2}
+  heightSettings:
+    Frequency: 0.005
+    Octaves: 4
+    Lacunarity: 2
+    Gain: 0.55
+  moistureSettings:
+    Frequency: 0.02
+    Octaves: 4
+    Lacunarity: 2.1
+    Gain: 0.49
+  temperatureSettings:
+    Frequency: 0.02
+    Octaves: 4
+    Lacunarity: 1.9
+    Gain: 0.51
 --- !u!218 &1079177113
 Terrain:
   m_ObjectHideFlags: 0
@@ -1460,19 +1478,14 @@ MonoBehaviour:
   terrainGenerator: {fileID: 1079177112}
   resourceGenerator: {fileID: 1079177117}
   items: {fileID: 11400000, guid: 65d383a02b89fe042a1836736b6d0caa, type: 2}
-  mapSizes: 000200000004000000080000
+  mapSizes: 800000000004000000080000
   mapResourcePrefab: {fileID: 8469823263192612569, guid: 08a26a57383b41548a8bd51da140db9e,
     type: 3}
   factoryPrefab: {fileID: 7215815610490485483, guid: 47ecdfd243f4364478f1548cc2bf764c,
     type: 3}
   generateRandom: 1
-  settings:
-    Frequency: 0.005
-    Octaves: 4
-    Lacunarity: 2
-    Gain: 0.55
-  seed: 60
-  mapSize: 2
+  seed: 0
+  mapSize: 0
   mapHeight: 10
 --- !u!114 &1079177117
 MonoBehaviour:

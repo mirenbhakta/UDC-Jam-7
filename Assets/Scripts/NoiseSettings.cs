@@ -28,10 +28,10 @@ namespace Miren
 		public void Init(uint seed)
 		{
 			Random rand = new Random(seed);
-			Init(rand);
+			Init(ref rand);
 		}
 
-		public void Init(Random rand)
+		public void Init(ref Random rand)
 		{
 			for (int i = 0; i < Octaves * 2; i++)
 			{
@@ -50,23 +50,70 @@ namespace Miren
 			fractalBounding = 1f / ampFractal;
 		}
 
-		public float Generate(float2 pos)
+		public float GetFBM(float2 pos)
 		{
-			float2 p = pos * Frequency;
+			pos *= Frequency;
 
-			float sum = 0;
+			float sum = Noise(pos.x + offsets[0], pos.y + offsets[1]);
 			float amp = 1;
 
-			for (int i = 0; i < Octaves; i++)
+			for (int i = 1; i < Octaves; i++)
 			{
-				p *= Lacunarity;
-				int i2 = i * 2;
-				float2 n = p + new float2(offsets[i2], offsets[i2 + 1]);
-				sum += Mathf.PerlinNoise(n.x, n.y) * amp;
+				pos *= Lacunarity;
 				amp *= Gain;
+				int i2 = i * 2;
+				float2 n = pos + new float2(offsets[i2], offsets[i2 + 1]);
+				sum += Noise(n) * amp;
 			}
 
 			return sum * fractalBounding;
+		}
+
+		public float GetBillow(float2 pos)
+		{
+			pos *= Frequency;
+
+			float sum = Mathf.Abs(Noise(pos.x + offsets[0], pos.y + offsets[1])) * 2 - 1;
+			float amp = 1;
+
+			for (int i = 1; i < Octaves; i++)
+			{
+				pos *= Lacunarity;
+				amp *= Gain;
+				int i2 = i * 2;
+				float2 n = pos + new float2(offsets[i2], offsets[i2 + 1]);
+				sum += (Mathf.Abs(Noise(n)) * 2 - 1) * amp;
+			}
+
+			return sum * fractalBounding;
+		}
+
+		public float GetRigidMulti(float2 pos)
+		{
+			pos *= Frequency;
+			float sum = 1 - Mathf.Abs(Noise(pos.x + offsets[0], pos.y + offsets[1]));
+			float amp = 1;
+
+			for (int i = 1; i < Octaves; i++)
+			{
+				pos *= Lacunarity;
+				amp *= Gain;
+				int i2 = i * 2;
+				float2 n = pos + new float2(offsets[i2], offsets[i2 + 1]);
+				sum -= (1 - Mathf.Abs(Noise(n))) * amp;
+			}
+
+			return sum;
+		}
+
+		private static float Noise(float2 n)
+		{
+			return OpenSimplex.Generate(n.x, n.y);
+		}
+
+		private static float Noise(float x, float y)
+		{
+			return Noise(new float2(x, y));
 		}
 	}
 }

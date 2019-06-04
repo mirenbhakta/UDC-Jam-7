@@ -35,9 +35,6 @@ namespace Miren
         private bool generateRandom;
 
         [SerializeField]
-        private NoiseSettings settings;
-
-        [SerializeField]
         private uint seed;
 
         [SerializeField]
@@ -54,7 +51,6 @@ namespace Miren
 
         private void Awake()
         {
-            Debug.Log(StandardPaths.saveDataDirectory);
             //GenerateMap();
         }
 
@@ -94,9 +90,8 @@ namespace Miren
 
             Random rand = new Random(seed);
 
-            settings.Init(rand);
             int size = mapSizes[(int) mapSize];
-            terrainGenerator.Generate(size, settings, mapHeight);
+            terrainGenerator.Generate(size, rand, mapHeight);
 
             resourceInstances = resourceGenerator.GenerateResources(rand, terrainGenerator.terrain, size);
 
