@@ -5,7 +5,12 @@ using UnityEngine;
 
 namespace Miren
 {
-    public class ItemObjectBase<T> : SerializedMonoBehaviour
+    public class ItemObjectBase : SerializedMonoBehaviour
+    {
+
+    }
+
+    public class ItemObjectBase<T> : ItemObjectBase
         where T : Item
     {
         [SerializeField]
@@ -14,14 +19,13 @@ namespace Miren
         [NonSerialized]
         public T Item;
 
-        public void SetPosition(Vector3 pos)
+        protected void SetPosition(Vector3 pos)
         {
-            Vector3 colliderPos = new Vector3(pos.x, pos.z, 0);
-            transform.position = colliderPos;
+            transform.position = PlayerController.GetColliderPosition(pos);
             rendererObject.position = pos;
         }
 
-        public void SetRotation(Quaternion rotation)
+        protected void SetRotation(Quaternion rotation)
         {
             rendererObject.localRotation = rotation;
         }
@@ -49,14 +53,19 @@ namespace Miren
 
         public uint Count;
 
-        public void Init(Vector3 position, Quaternion rotation, MapResource resource)
+        public void Init(Vector3 position, Quaternion rotation, MapResource resource, uint count)
         {
+            Item = resource;
+            Count = count;
+
             MeshFilter filter = rendererObject.GetComponent<MeshFilter>();
             filter.sharedMesh = resource.Mesh;
             MeshRenderer renderer = rendererObject.GetComponent<MeshRenderer>();
             renderer.sharedMaterial = resource.Material;
 
             Vector3 size = resource.Mesh.bounds.size;
+            size.x = Mathf.Round(size.x - 2f);
+            size.z = Mathf.Round(size.z - 2f);
             Collider2D coll = GetComponent<Collider2D>();
             switch (coll)
             {
@@ -75,6 +84,7 @@ namespace Miren
         public void Save(BinaryWriter writer)
         {
             writer.Write(Item.ID);
+            writer.Write(Count);
             Vector3 pos = rendererObject.position;
             writer.Write(pos.x);
             writer.Write(pos.y);
@@ -86,6 +96,7 @@ namespace Miren
         {
             ushort id = reader.ReadUInt16();
             MapResource item = items[id] as MapResource;
+            uint count = reader.ReadUInt32();
 
             Vector3 pos;
             pos.x = reader.ReadSingle();
@@ -94,7 +105,7 @@ namespace Miren
 
             Quaternion rot = Quaternion.Euler(0, reader.ReadSingle(), 0);
 
-            Init(pos, rot, item);
+            Init(pos, rot, item, count);
         }
     }
 }

@@ -72,9 +72,7 @@ namespace Miren
 
                     Quaternion rotation = Quaternion.Euler(0, rand.NextFloat(-180, 180), 0);
 
-                    instance.Init(pos, rotation, obj.Item as MapResource);
-
-
+                    instance.Init(pos, rotation, obj.Item as MapResource, rand.NextUInt(3000, 6000));
                 }
             }
 

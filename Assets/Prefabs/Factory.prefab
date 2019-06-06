@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7215815610243428633}
   - component: {fileID: 7215815610243428635}
   - component: {fileID: 7215815610243428632}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 7215815610490485480}
   - component: {fileID: 7215815610490485483}
   - component: {fileID: 7215815610490485482}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Factory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,6 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   rendererObject: {fileID: 7215815610243428633}
-  itemObject: {fileID: 0}
 --- !u!61 &7215815610490485482
 BoxCollider2D:
   m_ObjectHideFlags: 0

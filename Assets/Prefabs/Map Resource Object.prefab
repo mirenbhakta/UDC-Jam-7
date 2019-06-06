@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8469823263192612568}
   - component: {fileID: 8469823263192612569}
   - component: {fileID: 8469823263192612567}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Map Resource Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,6 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   rendererObject: {fileID: 8469823264222074239}
-  itemObject: {fileID: 0}
   Count: 0
 --- !u!61 &8469823263192612567
 BoxCollider2D:
@@ -94,7 +93,7 @@ GameObject:
   - component: {fileID: 8469823264222074239}
   - component: {fileID: 8469823264222074238}
   - component: {fileID: 8469823264222074112}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

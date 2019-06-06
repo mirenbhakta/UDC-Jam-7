@@ -31,6 +31,9 @@ namespace Miren
 
         private Vector3 min, max;
 
+        [SerializeField]
+        private Transform rayCasterPivot, rayCaster;
+
         private void Start()
         {
             map.OnGenerate += Init;
@@ -40,12 +43,15 @@ namespace Miren
         {
             TerrainData data = map.terrainGenerator.terrain.terrainData;
 
-            transform.position = new Vector3(0, data.size.y / 2f, 0);
+            Vector3 startPosition = new Vector3(0, data.size.y / 2f, 0);
+            rayCasterPivot.position = startPosition;
+            transform.position = startPosition;
+
             Vector3 size = data.size * 0.5f;
             Vector3 offset = new Vector3();
             max = size - offset;
             min = -max;
-            zoomTarget = Mathf.Lerp(minZoom, maxZoom, 0.5f);
+            zoomTarget = Mathf.Lerp(maxZoom, minZoom, 0.5f);
         }
 
         private Vector3 Clamp(Vector3 pos)
@@ -100,6 +106,10 @@ namespace Miren
             Vector3 cameraPos = cameraTransform.localPosition;
             cameraPos.z = Mathf.SmoothDamp(cameraPos.z, zoomTarget, ref zoomVelocity, zoomTime);
             cameraTransform.localPosition = cameraPos;
+
+            rayCasterPivot.localPosition = pos;
+            rayCasterPivot.localRotation = transform.localRotation;
+            rayCaster.localPosition = cameraPos;
         }
     }
 }
