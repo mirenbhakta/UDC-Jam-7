@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3703d284d694556a69167da4234f520, type: 3}
-  m_Name: Basic Smeltry
+  m_Name: Smeltry
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
+    - {fileID: 5646930606086586985, guid: 6a9ebe8d7565f5546a7c8d0268d75736, type: 3}
     - {fileID: 11400000, guid: fb1b22fb011e4d547a9ad32a12c286b4, type: 2}
     - {fileID: 11400000, guid: a22ce738b8ac9c340903a113496e82a3, type: 2}
     SerializedBytesString: 
@@ -38,6 +39,12 @@ MonoBehaviour:
     - Name: Type
       Entry: 3
       Data: 1
+    - Name: Materials
+      Entry: 6
+      Data: 
+    - Name: Mesh
+      Entry: 10
+      Data: 0
     - Name: SpeedMultiplier
       Entry: 4
       Data: 2
@@ -49,10 +56,10 @@ MonoBehaviour:
       Data: 2
     - Name: 
       Entry: 10
-      Data: 0
+      Data: 1
     - Name: 
       Entry: 10
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 13
       Data: 

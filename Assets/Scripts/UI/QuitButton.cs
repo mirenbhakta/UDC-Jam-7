@@ -5,12 +5,16 @@ public class QuitButton : MonoBehaviour
 {
 #if UNITY_WEBGL
 
-    [DllImport("__Internal")]
-    private static extern void QuitWebGL();
+    private static class WebGL
+    {
+        [DllImport("__Internal")]
+        public static extern void Quit();
+
+    }
 
     public void Quit()
     {
-        QuitWebGL();
+        WebGL.Quit();
     }
 
 #else

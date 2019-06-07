@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using JetBrains.Annotations;
 using Miren.UnityToolbag;
 using UnityEngine;
 using Unity.Mathematics;
@@ -13,6 +14,9 @@ namespace Miren
     [RequireComponent(typeof(TerrainGenerator), typeof(ResourceGenerator))]
     public class GameMap : MonoBehaviour
     {
+        [SerializeField]
+        private CameraController cameraController;
+
         [SerializeField]
         internal TerrainGenerator terrainGenerator;
 
@@ -47,8 +51,6 @@ namespace Miren
 
         private string mapName;
 
-        internal event Action OnGenerate;
-
         public void SetMapSize(int size)
         {
             mapSize = (MapSize) size;
@@ -62,6 +64,19 @@ namespace Miren
         public void SetSeed(string seed)
         {
             uint.TryParse(seed, out this.seed);
+        }
+
+        public void Clear()
+        {
+            if (resourceInstances == null) return;
+            for (int i = 0; i < resourceInstances.Length; i++)
+            {
+                MapResourceObject instance = resourceInstances[i];
+                if (instance != null)
+                {
+                    Destroy(instance.gameObject);
+                }
+            }
         }
 
         public void GenerateMap()
@@ -90,11 +105,32 @@ namespace Miren
 
             resourceInstances = resourceGenerator.GenerateResources(rand, terrainGenerator.terrain, size);
 
-            OnGenerate?.Invoke();
+            cameraController.Init();
         }
 
-        public static string SaveFileExtension = ".save";
-        
+        public const string SaveFileExtension = ".save";
+
+        private const int Version = 4;
+
+        public static FileInfo GetSavePath(string fileName)
+        {
+            return new FileInfo(Path.Combine(StandardPaths.saveDataDirectory, fileName));
+        }
+
+        public void Save(FileInfo file)
+        {
+            mapName = file.Name;
+
+            using (FileStream fs = file.Exists ? file.OpenWrite() : file.Create())
+            {
+                using (BinaryWriter writer = new BinaryWriter(fs))
+                {
+                    writer.Write(Version);
+                    Save(writer);
+                }
+            }
+        }
+
         public void Save()
         {
             if (mapName == null)
@@ -102,29 +138,28 @@ namespace Miren
                 mapName = "saveOnQuit";
             }
 
-            using (FileStream fs = new FileStream(Path.Combine(StandardPaths.saveDataDirectory, mapName + SaveFileExtension),
-                FileMode.OpenOrCreate,
-                FileAccess.Write))
-            {
-                using (BinaryWriter writer = new BinaryWriter(fs))
-                {
-                    Save(writer);
-                }
-            }
+            Save(GetSavePath(mapName + SaveFileExtension));
         }
 
-        public void Load(string mapName)
+        [CanBeNull]
+        public string Load(FileData data)
         {
-            this.mapName = mapName;
-            using (FileStream fs = new FileStream(Path.Combine(StandardPaths.saveDataDirectory, mapName),
-                FileMode.Open,
-                FileAccess.Read))
+            this.mapName = data.Info.Name;
+            using (FileStream fs = data.Info.OpenRead())
             {
                 using (BinaryReader reader = new BinaryReader(fs))
                 {
+                    int version = reader.ReadInt32();
+                    if (Version != version)
+                    {
+                        return "File cannot be loaded because it is an outdated version.";
+                    }
+
                     Load(reader);
                 }
             }
+
+            return null;
         }
 
         private void Save(BinaryWriter writer)
@@ -140,15 +175,13 @@ namespace Miren
                 MapResourceObject instance = resourceInstances[i];
                 if (instance == null)
                 {
-                    writer.Write(-i);
+                    writer.Write(-i - 1);
                     continue;
                 }
 
                 writer.Write(i);
                 instance.Save(writer);
             }
-
-
         }
 
         private void Load(BinaryReader reader)
@@ -157,11 +190,14 @@ namespace Miren
             mapSize = (MapSize) reader.ReadInt32();
 
             int size = mapSizes[(int) mapSize];
-            int featureSize = size / 16;
 
-            resourceInstances = new MapResourceObject[featureSize * featureSize];
+            terrainGenerator.Generate(size, new Random(seed), mapHeight);
 
-            for (int i = 0; i < resourceInstances.Length; i++)
+            int length = reader.ReadInt32();
+
+            resourceInstances = new MapResourceObject[length];
+
+            for (int i = 0; i < length; i++)
             {
                 int index = reader.ReadInt32();
                 if (index < 0)

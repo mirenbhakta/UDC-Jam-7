@@ -73,7 +73,7 @@ namespace Miren
 
     public abstract class RenderedItem : Item
     {
-        public Material Material;
+        public Material[] Materials;
         public Mesh Mesh;
     }
 

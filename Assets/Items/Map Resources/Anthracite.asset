@@ -39,9 +39,21 @@ MonoBehaviour:
     - Name: Type
       Entry: 3
       Data: 0
-    - Name: Material
+    - Name: Materials
+      Entry: 7
+      Data: 1|UnityEngine.Material[], UnityEngine.CoreModule
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
       Entry: 10
       Data: 0
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: Mesh
       Entry: 10
       Data: 1

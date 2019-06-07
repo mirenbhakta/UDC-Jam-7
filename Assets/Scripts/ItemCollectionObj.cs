@@ -11,15 +11,16 @@ namespace Miren
     {
         [FolderPath]
         public string Path;
-        
+
         public ItemCollection Collection;
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         private void OnEnable()
         {
             ProcessCollection();
         }
-        
+
+        [Button(name: "Refresh")]
         public void ProcessCollection()
         {
             if (Collection == null)
@@ -28,16 +29,17 @@ namespace Miren
                 Collection.Clear();
 
             IEnumerable<ItemObj> items = from str in UnityEditor.AssetDatabase.FindAssets("t: ItemObj")
-                select UnityEditor.AssetDatabase.LoadAssetAtPath<ItemObj>(UnityEditor.AssetDatabase.GUIDToAssetPath(str));
+                select UnityEditor.AssetDatabase.LoadAssetAtPath<ItemObj>(
+                    UnityEditor.AssetDatabase.GUIDToAssetPath(str));
 
             foreach (ItemObj obj in items)
             {
                 Collection.Add(obj.Item);
             }
-            
+
             UnityEditor.EditorUtility.SetDirty(this);
         }
-        #endif
+#endif
     }
 
     public class ItemCollection : KeyedCollection<ushort, Item>

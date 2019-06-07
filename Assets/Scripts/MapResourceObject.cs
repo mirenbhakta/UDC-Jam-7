@@ -61,7 +61,7 @@ namespace Miren
             MeshFilter filter = rendererObject.GetComponent<MeshFilter>();
             filter.sharedMesh = resource.Mesh;
             MeshRenderer renderer = rendererObject.GetComponent<MeshRenderer>();
-            renderer.sharedMaterial = resource.Material;
+            renderer.sharedMaterials = resource.Materials;
 
             Vector3 size = resource.Mesh.bounds.size;
             size.x = Mathf.Round(size.x - 2f);

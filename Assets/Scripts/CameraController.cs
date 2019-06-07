@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -34,16 +36,21 @@ namespace Miren
         [SerializeField]
         private Transform rayCasterPivot, rayCaster;
 
-        private void Start()
-        {
-            map.OnGenerate += Init;
-        }
-
-        private void Init()
+        public void Init()
         {
             TerrainData data = map.terrainGenerator.terrain.terrainData;
-
             Vector3 startPosition = new Vector3(0, data.size.y / 2f, 0);
+            Init(startPosition, data);
+        }
+
+        public void Init(Vector3 startPosition)
+        {
+            TerrainData data = map.terrainGenerator.terrain.terrainData;
+            Init(startPosition, data);
+        }
+
+        public void Init(Vector3 startPosition, TerrainData data)
+        {
             rayCasterPivot.position = startPosition;
             transform.position = startPosition;
 
@@ -110,6 +117,43 @@ namespace Miren
             rayCasterPivot.localPosition = pos;
             rayCasterPivot.localRotation = transform.localRotation;
             rayCaster.localPosition = cameraPos;
+        }
+
+        public void Pause()
+        {
+            enabled = false;
+        }
+
+        public void Resume()
+        {
+            enabled = true;
+        }
+
+        public void Save(BinaryWriter writer)
+        {
+            Vector3 position = transform.position;
+            writer.Write(position.x);
+            writer.Write(position.y);
+            writer.Write(position.z);
+
+            float angle = transform.localEulerAngles.y;
+            writer.Write(angle);
+        }
+
+        public void Load(BinaryReader reader)
+        {
+            Vector3 position;
+            position.x = reader.ReadSingle();
+            position.y = reader.ReadSingle();
+            position.z = reader.ReadSingle();
+
+            float angle = reader.ReadSingle();
+
+            Vector3 euler = transform.localEulerAngles;
+            euler.y = angle;
+            transform.localEulerAngles = euler;
+
+            Init(position);
         }
     }
 }

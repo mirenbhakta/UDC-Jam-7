@@ -55,6 +55,16 @@ namespace Miren
             }
         }
 
+        public void Pause()
+        {
+            enabled = false;
+        }
+
+        public void Resume()
+        {
+            enabled = true;
+        }
+
         public static Vector3 GetColliderPosition(Vector3 vector)
         {
             return new Vector3(vector.x, vector.z + vector.y, 0);
