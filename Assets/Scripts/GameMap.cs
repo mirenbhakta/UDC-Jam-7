@@ -46,13 +46,8 @@ namespace Miren
         private MapResourceObject[] resourceInstances;
 
         private string mapName;
-        
-        internal event Action OnGenerate;
 
-        private void Awake()
-        {
-            //GenerateMap();
-        }
+        internal event Action OnGenerate;
 
         public void SetMapSize(int size)
         {
@@ -100,23 +95,45 @@ namespace Miren
 
         public void Save()
         {
+            if (mapName == null)
+            {
+                mapName = "saveOnQuit.save";
+            }
+
             using (FileStream fs = new FileStream(Path.Combine(StandardPaths.saveDataDirectory, mapName),
                 FileMode.OpenOrCreate,
                 FileAccess.Write))
             {
                 using (BinaryWriter writer = new BinaryWriter(fs))
                 {
-
+                    Save(writer);
                 }
             }
         }
 
-        public void Save(BinaryWriter writer)
+        public void Load(string mapName)
+        {
+            this.mapName = mapName;
+            using (FileStream fs = new FileStream(Path.Combine(StandardPaths.saveDataDirectory, mapName),
+                FileMode.Open,
+                FileAccess.Read))
+            {
+                using (BinaryReader reader = new BinaryReader(fs))
+                {
+                    Load(reader);
+                }
+            }
+        }
+
+        private void Save(BinaryWriter writer)
         {
             writer.Write(seed);
             writer.Write((int) mapSize);
 
-            for (int i = 0; i < resourceInstances.Length; i++)
+            int length = resourceInstances?.Length ?? 0;
+            writer.Write(length);
+
+            for (int i = 0; i < length; i++)
             {
                 MapResourceObject instance = resourceInstances[i];
                 if (instance == null)
@@ -128,9 +145,11 @@ namespace Miren
                 writer.Write(i);
                 instance.Save(writer);
             }
+
+
         }
 
-        public void Load(BinaryReader reader)
+        private void Load(BinaryReader reader)
         {
             seed = reader.ReadUInt32();
             mapSize = (MapSize) reader.ReadInt32();

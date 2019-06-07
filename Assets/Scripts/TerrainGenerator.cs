@@ -85,8 +85,8 @@ namespace Miren
 				for (int y = 0; y < alphaSize; y++)
 				{
 					float2 p = new float2(y, x);
-					float temp = Scale(temperatureSettings.GetRigidMulti(p));
-					float moisture = Scale(moistureSettings.GetRigidMulti(p));
+					float temp = Scale(temperatureSettings.GetBillow(p));
+					float moisture = Scale(moistureSettings.GetBillow(p));
 
 					alpha[x, y, 0] = moisture;
 					alpha[x, y, 1] = temp;
