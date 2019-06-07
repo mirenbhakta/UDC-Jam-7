@@ -93,14 +93,16 @@ namespace Miren
             OnGenerate?.Invoke();
         }
 
+        public static string SaveFileExtension = ".save";
+        
         public void Save()
         {
             if (mapName == null)
             {
-                mapName = "saveOnQuit.save";
+                mapName = "saveOnQuit";
             }
 
-            using (FileStream fs = new FileStream(Path.Combine(StandardPaths.saveDataDirectory, mapName),
+            using (FileStream fs = new FileStream(Path.Combine(StandardPaths.saveDataDirectory, mapName + SaveFileExtension),
                 FileMode.OpenOrCreate,
                 FileAccess.Write))
             {
