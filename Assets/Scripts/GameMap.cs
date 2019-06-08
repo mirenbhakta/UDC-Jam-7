@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Runtime.InteropServices;
 using JetBrains.Annotations;
 using Miren.UnityToolbag;
 using UnityEngine;
@@ -25,6 +26,9 @@ namespace Miren
 
         [SerializeField]
         internal ItemCollectionObj items;
+
+        [SerializeField]
+        internal FactoryRecipeCollectionObj recipes;
 
         [SerializeField]
         private int[] mapSizes;
@@ -110,16 +114,16 @@ namespace Miren
 
         public const string SaveFileExtension = ".save";
 
-        private const int Version = 4;
+        private const int Version = 7;
 
         public static FileInfo GetSavePath(string fileName)
         {
-            return new FileInfo(Path.Combine(StandardPaths.saveDataDirectory, fileName));
+            return new FileInfo(Path.Combine(Application.persistentDataPath, fileName));
         }
 
         public void Save(FileInfo file)
         {
-            mapName = file.Name;
+            mapName = Path.GetFileNameWithoutExtension(file.Name);
 
             using (FileStream fs = file.Exists ? file.OpenWrite() : file.Create())
             {
@@ -129,8 +133,15 @@ namespace Miren
                     Save(writer);
                 }
             }
+#if UNITY_WEBGL
+            SyncFiles();
+#endif
         }
 
+#if UNITY_WEBGL
+        [DllImport("__Internal")]
+        public static extern void SyncFiles();
+#endif
         public void Save()
         {
             if (mapName == null)
@@ -144,7 +155,7 @@ namespace Miren
         [CanBeNull]
         public string Load(FileData data)
         {
-            this.mapName = data.Info.Name;
+            this.mapName = Path.GetFileNameWithoutExtension(data.Info.Name);
             using (FileStream fs = data.Info.OpenRead())
             {
                 using (BinaryReader reader = new BinaryReader(fs))
@@ -164,6 +175,8 @@ namespace Miren
 
         private void Save(BinaryWriter writer)
         {
+            cameraController.Save(writer);
+
             writer.Write(seed);
             writer.Write((int) mapSize);
 
@@ -180,12 +193,14 @@ namespace Miren
                 }
 
                 writer.Write(i);
-                instance.Save(writer);
+                instance.Save(writer, null);
             }
         }
 
         private void Load(BinaryReader reader)
         {
+            cameraController.Load(reader);
+
             seed = reader.ReadUInt32();
             mapSize = (MapSize) reader.ReadInt32();
 

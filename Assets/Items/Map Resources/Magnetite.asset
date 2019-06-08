@@ -35,7 +35,7 @@ MonoBehaviour:
       Data: Magnetite
     - Name: ID
       Entry: 3
-      Data: 5002
+      Data: 0
     - Name: Type
       Entry: 3
       Data: 0

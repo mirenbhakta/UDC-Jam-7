@@ -1,43 +1,43 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace Miren
 {
     [CreateAssetMenu]
-    public class ItemCollectionObj : SerializedScriptableObject
+    public class FactoryRecipeCollectionObj : SerializedScriptableObject
     {
         [FolderPath]
         public string Path;
 
-        public ItemCollection Collection;
+        public FactoryRecipeCollection Collection;
 
 #if UNITY_EDITOR
-        [Button(name: "Refresh")]
+        [Button("Refresh")]
         public void ProcessCollection()
         {
             if (Collection == null)
-                Collection = new ItemCollection();
+                Collection = new FactoryRecipeCollection();
             else
                 Collection.Clear();
 
-            IEnumerable<ItemObj> items = from str in UnityEditor.AssetDatabase.FindAssets("t: ItemObj")
-                select UnityEditor.AssetDatabase.LoadAssetAtPath<ItemObj>(
+            IEnumerable<FactoryRecipe> items = from str in UnityEditor.AssetDatabase.FindAssets("t: FactoryRecipe")
+                select UnityEditor.AssetDatabase.LoadAssetAtPath<FactoryRecipe>(
                     UnityEditor.AssetDatabase.GUIDToAssetPath(str));
 
-            foreach (ItemObj obj in items)
+            foreach (FactoryRecipe obj in items)
             {
-                if (Collection.Contains(obj.Item))
+                if (Collection.Contains(obj))
                 {
                     continue;
                 }
-
+                
                 try
                 {
-                    Collection.Add(obj.Item);
+                    Collection.Add(obj);
                 }
                 catch (ArgumentException e)
                 {
@@ -50,8 +50,8 @@ namespace Miren
                         }
                     }
 
-                    obj.Item.ID = i;
-                    Collection.Add(obj.Item);
+                    obj.id = i;
+                    Collection.Add(obj);
                 }
             }
 
@@ -60,11 +60,11 @@ namespace Miren
 #endif
     }
 
-    public class ItemCollection : KeyedCollection<ushort, Item>
+    public class FactoryRecipeCollection : KeyedCollection<ushort, FactoryRecipe>
     {
-        protected override ushort GetKeyForItem(Item item)
+        protected override ushort GetKeyForItem(FactoryRecipe item)
         {
-            return item.ID;
+            return item.id;
         }
     }
 }

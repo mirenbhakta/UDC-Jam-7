@@ -32,7 +32,7 @@ MonoBehaviour:
       Data: Copper Ore
     - Name: ID
       Entry: 3
-      Data: 3
+      Data: 0
     - Name: Type
       Entry: 3
       Data: 0

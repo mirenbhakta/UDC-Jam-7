@@ -32,7 +32,7 @@ MonoBehaviour:
       Data: Coal
     - Name: ID
       Entry: 3
-      Data: 1
+      Data: 0
     - Name: Type
       Entry: 3
       Data: 0

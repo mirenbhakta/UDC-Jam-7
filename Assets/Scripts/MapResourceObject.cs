@@ -5,12 +5,13 @@ using UnityEngine;
 
 namespace Miren
 {
-    public class ItemObjectBase : SerializedMonoBehaviour
+    public abstract class ItemObjectBase : SerializedMonoBehaviour
     {
-
+        public abstract void Save(BinaryWriter writer, object data);
+        public abstract void Load(BinaryReader reader, object data);
     }
 
-    public class ItemObjectBase<T> : ItemObjectBase
+    public abstract class ItemObjectBase<T> : ItemObjectBase
         where T : Item
     {
         [SerializeField]
@@ -81,7 +82,7 @@ namespace Miren
             SetPosition(position);
         }
 
-        public void Save(BinaryWriter writer)
+        public override void Save(BinaryWriter writer, object data)
         {
             writer.Write(Item.ID);
             writer.Write(Count);
@@ -92,8 +93,9 @@ namespace Miren
             writer.Write(rendererObject.localEulerAngles.y);
         }
 
-        public void Load(BinaryReader reader, ItemCollection items)
+        public override void Load(BinaryReader reader, object data)
         {
+            ItemCollection items = data as ItemCollection;
             ushort id = reader.ReadUInt16();
             MapResource item = items[id] as MapResource;
             uint count = reader.ReadUInt32();

@@ -7,18 +7,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3703d284d694556a69167da4234f520, type: 3}
-  m_Name: Bituminous
+  m_Name: Oil
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
-    ReferencedUnityObjects:
-    - {fileID: 2100000, guid: 491eda00a72735f45b6a0728db663e98, type: 2}
-    - {fileID: -7982704158380059054, guid: bc779e3fd72108a44a2583eb59af0892, type: 3}
-    - {fileID: 11400000, guid: e85cdaee01d1dc34aa75ee2c15f28467, type: 2}
+    ReferencedUnityObjects: []
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -26,43 +23,19 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Item
       Entry: 7
-      Data: 0|Miren.MapResource, Assembly-CSharp
+      Data: 0|Miren.Resource, Assembly-CSharp
     - Name: Icon
       Entry: 6
       Data: 
     - Name: Name
       Entry: 1
-      Data: Bituminous
+      Data: Oil
     - Name: ID
       Entry: 3
       Data: 0
     - Name: Type
       Entry: 3
       Data: 0
-    - Name: Materials
-      Entry: 7
-      Data: 1|UnityEngine.Material[], UnityEngine.CoreModule
-    - Name: 
-      Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 10
-      Data: 0
-    - Name: 
-      Entry: 13
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: Mesh
-      Entry: 10
-      Data: 1
-    - Name: HarvestDifficulty
-      Entry: 4
-      Data: 1
-    - Name: editorYield
-      Entry: 10
-      Data: 2
     - Name: 
       Entry: 8
       Data: 

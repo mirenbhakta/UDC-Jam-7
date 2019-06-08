@@ -35,7 +35,7 @@ MonoBehaviour:
       Data: Basic Smeltry
     - Name: ID
       Entry: 3
-      Data: 10001
+      Data: 0
     - Name: Type
       Entry: 3
       Data: 1

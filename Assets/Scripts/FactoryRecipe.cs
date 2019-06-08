@@ -7,6 +7,9 @@ namespace Miren
     [CreateAssetMenu]
     public class FactoryRecipe : SerializedScriptableObject
     {
+        [SerializeField]
+        internal ushort id;
+
         private struct EditorRecipeItem
         {
             public ItemObj Item;
@@ -14,7 +17,7 @@ namespace Miren
             [MinValue(1)]
             public uint Count;
         }
-    
+
         public float Time;
 
         [SerializeField, LabelText("Consumed Items"), ListDrawerSettings(Expanded = true)]
@@ -22,7 +25,7 @@ namespace Miren
 
         [SerializeField, LabelText("Produced Items"), ListDrawerSettings(Expanded = true)]
         private EditorRecipeItem[] editorItemProducts = new EditorRecipeItem[1];
-    
+
         [NonSerialized]
         public RecipeItem[] Ingredients, Products;
 

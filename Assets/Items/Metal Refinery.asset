@@ -7,18 +7,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c3703d284d694556a69167da4234f520, type: 3}
-  m_Name: Bituminous
+  m_Name: Metal Refinery
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 2100000, guid: 491eda00a72735f45b6a0728db663e98, type: 2}
-    - {fileID: -7982704158380059054, guid: bc779e3fd72108a44a2583eb59af0892, type: 3}
-    - {fileID: 11400000, guid: e85cdaee01d1dc34aa75ee2c15f28467, type: 2}
+    - {fileID: 2100000, guid: 75bab06cfac348d4483a052ca768d20e, type: 2}
+    - {fileID: -9007632685173550870, guid: 6a9ebe8d7565f5546a7c8d0268d75736, type: 3}
+    - {fileID: 5646930606086586985, guid: 6a9ebe8d7565f5546a7c8d0268d75736, type: 3}
+    - {fileID: 11400000, guid: 3d8beebdc5ca5db47aa6f539ef2248d9, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -26,28 +27,31 @@ MonoBehaviour:
     SerializationNodes:
     - Name: Item
       Entry: 7
-      Data: 0|Miren.MapResource, Assembly-CSharp
+      Data: 0|Miren.Factory, Assembly-CSharp
     - Name: Icon
       Entry: 6
       Data: 
     - Name: Name
       Entry: 1
-      Data: Bituminous
+      Data: Metal Refinery
     - Name: ID
       Entry: 3
       Data: 0
     - Name: Type
       Entry: 3
-      Data: 0
+      Data: 1
     - Name: Materials
       Entry: 7
       Data: 1|UnityEngine.Material[], UnityEngine.CoreModule
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 2
     - Name: 
       Entry: 10
       Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
     - Name: 
       Entry: 13
       Data: 
@@ -56,13 +60,25 @@ MonoBehaviour:
       Data: 
     - Name: Mesh
       Entry: 10
-      Data: 1
-    - Name: HarvestDifficulty
-      Entry: 4
-      Data: 1
-    - Name: editorYield
-      Entry: 10
       Data: 2
+    - Name: SpeedMultiplier
+      Entry: 4
+      Data: 0
+    - Name: factoryRecipes
+      Entry: 7
+      Data: 2|Miren.FactoryRecipe[], Assembly-CSharp
+    - Name: 
+      Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 13
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 

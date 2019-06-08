@@ -19,7 +19,5 @@ namespace Miren
             label.text = Path.GetFileNameWithoutExtension(info.Name);
             Info = info;
         }
-        
-        
     }
 }

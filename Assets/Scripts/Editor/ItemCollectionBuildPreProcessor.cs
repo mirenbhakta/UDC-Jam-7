@@ -19,6 +19,15 @@ namespace Miren.Editor
             {
                 collection.ProcessCollection();
             }
+
+            IEnumerable<FactoryRecipeCollectionObj> recipes =
+                from str in AssetDatabase.FindAssets("t:FactoryRecipeCollectionObj")
+                select AssetDatabase.LoadAssetAtPath<FactoryRecipeCollectionObj>(AssetDatabase.GUIDToAssetPath(str));
+
+            foreach (FactoryRecipeCollectionObj obj in recipes)
+            {
+                obj.ProcessCollection();
+            }
         }
     }
 }

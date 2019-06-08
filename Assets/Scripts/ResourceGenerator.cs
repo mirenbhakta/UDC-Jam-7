@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -11,22 +13,26 @@ namespace Miren
         private MapResourceObject resourcePrefab;
 
         [SerializeField]
-        private NoiseSettings ironSettings;
-
+        private FactoryObject factoryPrefab;
+        
         [SerializeField]
         private ItemObj[] ironResources;
-
-        [SerializeField]
-        private NoiseSettings copperSettings;
 
         [SerializeField]
         private ItemObj[] copperResources;
 
         [SerializeField]
-        private NoiseSettings coalSettings;
+        private ItemObj[] coalResources;
 
         [SerializeField]
-        private ItemObj[] coalResources;
+        private ItemObj[] factories;
+
+        private ItemObj[] everything;
+
+        private void Awake()
+        {
+            everything = ironResources.Concat(copperResources).Concat(coalResources).Concat(factories).ToArray();
+        }
 
         public MapResourceObject[] GenerateResources(Random rand, Terrain terrain, int size)
         {
@@ -65,19 +71,33 @@ namespace Miren
 
                     ItemObj obj = resources[rand.NextInt(0, resources.Length)];
 
-                    MapResourceObject instance = mapResourceObjects[x + z * featureSize] =
-                        Instantiate(resourcePrefab, transform);
-                    Vector3 pos = new Vector3(x * 16 - halfSize, 0, z * 16 - halfSize);
-                    pos.y = terrain.SampleHeight(pos);
+                    switch (obj.Item)
+                    {
+                        case MapResource resourceObject:
+                        {
+                            MapResourceObject instance = mapResourceObjects[x + z * featureSize] =
+                                Instantiate(resourcePrefab, transform);
+                            Vector3 pos = new Vector3(x * 16 - halfSize, 0, z * 16 - halfSize);
+                            pos.y = terrain.SampleHeight(pos);
 
-                    Quaternion rotation = Quaternion.Euler(0, rand.NextFloat(-180, 180), 0);
+                            Quaternion rotation = Quaternion.Euler(0, rand.NextFloat(-180, 180), 0);
 
-                    instance.Init(pos, rotation, obj.Item as MapResource, rand.NextUInt(3000, 6000));
+                            instance.Init(pos, rotation, obj.Item as MapResource, rand.NextUInt(3000, 6000));
+                            break;
+                        }
+
+                        case Factory factory:
+
+                            break;
+                    }
+
+
                 }
             }
 
             return mapResourceObjects;
         }
+
 
         public MapResourceObject CreateInstance()
         {
