@@ -80,7 +80,7 @@ fabric.properties
 [Bb]uild/
 [Bb]uilds/
 [Ll]ogs/
-[Pp]lugins/
+#[Pp]lugins/
 
 # Never ignore Asset meta data
 ![Aa]ssets/**/*.meta
